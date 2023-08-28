@@ -7,6 +7,8 @@ import { useState } from "react";
 import AddCard from "./Pages/AddCard";
 import FlashcardViewer from "./Pages/FlashcardViewer";
 
+import Notification from "./Components/Notification";
+
 const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
@@ -51,6 +53,7 @@ const Main = () => {
           renderScene={({ route, jumpTo }) => {}}
         />
       </View>
+      <Notification />
     </View>
   );
 };

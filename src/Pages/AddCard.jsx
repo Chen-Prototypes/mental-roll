@@ -1,17 +1,26 @@
 import { useState, useContext } from "react";
-import { View, StyleSheet } from "react-native";
-import { Button, TextInput } from "react-native-paper";
 import { RealmContext } from "../RealmProvider";
 
+import { View, StyleSheet } from "react-native";
+import { Button, TextInput } from "react-native-paper";
+
+import { useDispatch } from "react-redux";
+import { notify } from "../Redux/notificationReducer";
+
 const AddCard = () => {
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+  const dispatch = useDispatch();
   const realm = useContext(RealmContext);
 
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+
   const addCard = () => {
+    dispatch(notify("Card added", "success"));
+
     realm.write(() => {
       const lastFlashcard = realm.objects("Flashcard").sorted("id", true)[0];
       const highestId = lastFlashcard ? lastFlashcard.id : 0;
+
       realm.create("Flashcard", {
         id: highestId + 1,
         question: question,
