@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
-import { Card, Title, Paragraph } from "react-native-paper";
+import { View, StyleSheet, FlatList, Alert } from "react-native";
+import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { RealmContext } from "../RealmProvider";
 
 const CardsView = () => {
@@ -8,11 +8,35 @@ const CardsView = () => {
   const [flashcards, setFlashcards] = useState([]);
 
   useEffect(() => {
+    loadData();
+  }, [realm]);
+
+  const loadData = () => {
     if (realm) {
-      const allFlashcards = realm.objects("Flashcard").slice(); // Assuming your model is named 'Flashcard'
+      const allFlashcards = realm.objects("Flashcard").slice();
       setFlashcards(allFlashcards);
     }
-  }, [realm]);
+  };
+
+  const deleteCard = (id) => {
+    Alert.alert(
+      "Delete Flashcard",
+      "Are you sure you want to delete this flashcard?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Yes",
+          onPress: () => {
+            realm.write(() => {
+              const cardToDelete = realm.objectForPrimaryKey("Flashcard", id);
+              realm.delete(cardToDelete);
+            });
+            loadData();
+          },
+        },
+      ]
+    );
+  };
 
   const renderCard = ({ item }) => (
     <Card style={styles.card}>
@@ -21,6 +45,9 @@ const CardsView = () => {
         <Title>{item.question}</Title>
         <Paragraph>{item.answer}</Paragraph>
       </Card.Content>
+      <Card.Actions>
+        <Button onPress={() => deleteCard(item.id)}>Delete</Button>
+      </Card.Actions>
     </Card>
   );
 
@@ -29,7 +56,7 @@ const CardsView = () => {
       <FlatList
         data={flashcards}
         renderItem={renderCard}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => item.id.toString()}
       />
     </View>
   );
