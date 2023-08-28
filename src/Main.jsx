@@ -1,30 +1,36 @@
-import { Text, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Route, Routes, useNavigate } from "react-router-native";
 import Constants from "expo-constants";
 import { BottomNavigation } from "react-native-paper";
 import { useState } from "react";
 
 import AddCard from "./Pages/AddCard";
+import FlashcardViewer from "./Pages/FlashcardViewer";
 
 const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
     flex: 1,
+    paddingTop: 180,
+    backgroundColor: "rgb(255, 251, 255)",
   },
   contentContainer: {
     flex: 1,
   },
 });
 
-const HomeScreen = () => <Text>Home Screen</Text>; // Placeholder
-
 const Main = () => {
   const navigate = useNavigate();
 
   const [index, setIndex] = useState(0);
   const routes = [
-    { key: "home", title: "Home", focusedIcon: "home", path: "/flashcards" },
-    { key: "add-card", title: "Add Card", focusedIcon: "plus", path: "/add-card" },
+    { key: "flash", title: "Cards", focusedIcon: "flash", path: "/" },
+    {
+      key: "add-card",
+      title: "Add Card",
+      focusedIcon: "plus",
+      path: "/add-card",
+    },
   ];
 
   const handleTabPress = (newIndex) => {
@@ -34,10 +40,9 @@ const Main = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Card Caster</Text>
       <View style={styles.contentContainer}>
         <Routes>
-          <Route path="/flashcards" element={<HomeScreen />} />
+          <Route path="/" element={<FlashcardViewer />} />
           <Route path="/add-card" element={<AddCard />} />
         </Routes>
         <BottomNavigation
