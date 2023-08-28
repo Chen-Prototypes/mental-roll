@@ -8,7 +8,7 @@ import { Button, Card, Title, Paragraph } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { notify } from "../Redux/notificationReducer";
 
-const FlashcardViewer = () => {
+const Practice = () => {
   const dispatch = useDispatch();
   const realm = useContext(RealmContext);
 
@@ -26,9 +26,9 @@ const FlashcardViewer = () => {
     setRevealAnswer(false);
     if (currentIndex + 1 < roll) setCurrentIndex(currentIndex + 1);
     else {
-      setCurrentIndex(-1)
-      useDispatch(notify("Good Job!"));
-    };
+      setCurrentIndex(-1);
+      dispatch(notify(`Good Job! You finished ${roll} flashcards!`));
+    }
   };
 
   const start = () => {
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FlashcardViewer;
+export default Practice;

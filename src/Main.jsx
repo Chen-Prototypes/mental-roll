@@ -5,7 +5,8 @@ import { BottomNavigation } from "react-native-paper";
 import { useState } from "react";
 
 import AddCard from "./Pages/AddCard";
-import FlashcardViewer from "./Pages/FlashcardViewer";
+import Practice from "./Pages/Practice";
+import CardsView from "./Pages/CardsView";
 
 import Notification from "./Components/Notification";
 
@@ -13,7 +14,6 @@ const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
     flex: 1,
-    paddingTop: 180,
     backgroundColor: "rgb(255, 251, 255)",
   },
   contentContainer: {
@@ -26,12 +26,18 @@ const Main = () => {
 
   const [index, setIndex] = useState(0);
   const routes = [
-    { key: "flash", title: "Cards", focusedIcon: "flash", path: "/" },
+    { key: "roll", title: "Roll", focusedIcon: "flash", path: "/" },
     {
       key: "add-card",
       title: "Add Card",
       focusedIcon: "plus",
       path: "/add-card",
+    },
+    {
+      key: "cards-view",
+      title: "View Cards",
+      focusedIcon: "layers",
+      path: "/cards",
     },
   ];
 
@@ -44,15 +50,18 @@ const Main = () => {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Routes>
-          <Route path="/" element={<FlashcardViewer />} />
+          <Route path="/" element={<Practice />} />
           <Route path="/add-card" element={<AddCard />} />
+          <Route path="/cards" element={<CardsView />} />
         </Routes>
-        <BottomNavigation
-          navigationState={{ index, routes }}
-          onIndexChange={handleTabPress}
-          renderScene={({ route, jumpTo }) => {}}
-        />
       </View>
+
+      <BottomNavigation
+        style={{ flex: 0 }}
+        navigationState={{ index, routes }}
+        onIndexChange={handleTabPress}
+        renderScene={() => {}}
+      />
       <Notification />
     </View>
   );
