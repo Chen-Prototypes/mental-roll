@@ -1,8 +1,6 @@
 # Mental Roll
 
-Mental Roll is a unique React Native mobile application designed to transform the traditional flashcard study method. 
-
-Instead of systematically reviewing a predefined set of flashcards, Mental Roll introduces an element of randomness and challenge: Users roll a dice to determine how many cards they'll study in a session, making each study session unpredictable and engaging.
+This is a simple flash card app in React Native. But instead of choosing how many flashcards you do it will will randomly choose how many to do for you, hence the `roll` part.
 
 ## Screenshots
 
